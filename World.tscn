@@ -1,0 +1,105 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Rocket Launch Resources/RocketShip.png" type="Texture" id=1]
+[ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://Rocket Launch Resources/LaunchButton.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0, 9.91838e-39, 0.0270633, 1 )
+colors = PoolColorArray( 1, 0.772549, 0, 1, 1, 0, 0, 1, 0.960784, 0.0509804, 0.0509804, 0.745098, 0.588235, 0.278431, 0.278431, 0.862745, 1, 0.796078, 0.796078, 0 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0, 0 )
+colors = PoolColorArray( 1, 0, 0, 1, 0.678431, 0.388235, 0.027451, 0.768627, 0.870588, 0.32549, 0.0666667, 0.443137 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+trail_size_modifier = SubResource( 6 )
+trail_color_modifier = SubResource( 4 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, 98, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 115.9
+angle_random = 0.93
+scale = 32.99
+scale_random = 1.0
+color_ramp = SubResource( 8 )
+hue_variation = 0.05
+hue_variation_random = 1.0
+
+[sub_resource type="Animation" id=1]
+resource_name = "Launch"
+tracks/0/type = "value"
+tracks/0/path = NodePath("RocketShip:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 640, 620 ), Vector2( 640, -112 ) ]
+}
+
+[node name="World" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Sky" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RocketShip" type="Sprite" parent="."]
+position = Vector2( 640, 620 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Fire" type="Particles2D" parent="RocketShip"]
+position = Vector2( 0, 53 )
+emitting = false
+amount = 40
+randomness = 1.0
+local_coords = false
+process_material = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Launch = SubResource( 1 )
+
+[node name="LaunchButton" type="TextureButton" parent="."]
+margin_left = 1056.8
+margin_top = 644.388
+margin_right = 1105.8
+margin_bottom = 660.388
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="hide" from="RocketShip" to="." method="_on_RocketShip_hide"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="pressed" from="LaunchButton" to="." method="_on_LaunchButton_pressed"]
