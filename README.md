@@ -1,6 +1,6 @@
 # Rocket Launch
 
-Following the awesome [godot](https://godotengine.org/) tutorial by HeartBeast, [support it!](https://courses.heartgamedev.com/)
+Following the awesome [godot](https://godotengine.org/) tutorial by HeartBeast, [support him!](https://courses.heartgamedev.com/)
 
 ## Requirements
 
